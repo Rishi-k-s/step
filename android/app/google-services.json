@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1063587378136",
+    "project_id": "step-5587a",
+    "storage_bucket": "step-5587a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063587378136:android:cfaa6341e2fa991e8678ad",
+        "android_client_info": {
+          "package_name": "com.bitnosh.step"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1063587378136-dlhh2v7459p5fbj3rbrpu18m7jjd8570.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bitnosh.step",
+            "certificate_hash": "df289eb2f3100d620980ae81d294618dacee86c1"
+          }
+        },
+        {
+          "client_id": "1063587378136-vmrpij9g1jfbftqbns5ss75p78dau5ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgoLWoahqKSJEditnN0E8jzIEMvISoiK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1063587378136-vmrpij9g1jfbftqbns5ss75p78dau5ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
