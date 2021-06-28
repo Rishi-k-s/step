@@ -1,10 +1,10 @@
 # step
 
-A new Flutter project.
+Student Teacher E-Learning Program
 
-## Getting Started
+## The Code
 
-This project is a starting point for a Flutter application.
+Dart
 
 A few resources to get you started if this is your first Flutter project:
 
