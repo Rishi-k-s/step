@@ -25,6 +25,7 @@ class StepUserFromFirebase {
   String email;
   String standard;
   String division;
+  String school;
   Timestamp lastlogin;
   Timestamp createdat;
 
@@ -35,10 +36,12 @@ class StepUserFromFirebase {
     subject = data['subject'] ?? '';
     email = data['email'] ?? '';
     standard = data['standard'] ?? '';
+    school = data['school'] ?? '';
     division = data['division'] ?? '';
     lastlogin = data['last_login'] ?? '';
     createdat = data['created_at'] ?? '';
   }
 
-  StepUserFromFirebase({this.uid, this.name, this.role, this.subject, this.email, this.standard, this.division, this.lastlogin, this.createdat});
+  StepUserFromFirebase(
+      {this.uid, this.name, this.role, this.subject, this.email, this.standard, this.division, this.lastlogin, this.createdat, this.school});
 }

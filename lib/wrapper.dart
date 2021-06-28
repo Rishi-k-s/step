@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,8 @@ import 'package:step/services/database.dart';
 // }
 
 class Wrapper extends StatelessWidget {
+  Future<void> fetchRole(String uid) async {}
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User>(
@@ -29,6 +32,7 @@ class Wrapper extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             UserHelper.saveUser(snapshot.data);
+
             return RoleSelector();
           }
           return Authenticate();
