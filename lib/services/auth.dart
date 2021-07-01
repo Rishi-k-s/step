@@ -58,7 +58,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     // final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.co.in', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.com.in', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -97,17 +97,18 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp app = await Firebase.initializeApp(name: 'com.bitnosh.in', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.bitnosh.com.in', options: Firebase.app().options);
 
     try {
-      UserCredential result = await FirebaseAuth.instanceFor(app: app).createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
       // User user = result.user;
       print("userid after " + auth.currentUser.uid.toString());
       // add users
       await UserHelper(uid: result.user.uid)
-          .addDataToFirebase(name, email, role, city, state, country, standard, division, subject, collectionWhereUserShouldBe, school);
+          .addUserDataToFirebase(name, email, role, city, state, country, standard, division, subject, collectionWhereUserShouldBe, school);
       // add role to firebase
       await UserHelper(uid: result.user.uid).addRoleDataToFirebase(collectionWhereRoleShouldBe, role);
+      tempApp.delete();
       return 'okey';
     } catch (e) {
       print(e.toString());

@@ -109,14 +109,17 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                   CategoryCard(
                     title: "view users",
                     svgSrc: "assets/homescreen/school/home cards/add user.svg",
-                    press: () {},
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddUserFromSchool()),
+                      );
+                    },
                   ),
                   CategoryCard(
                     title: "add user",
                     svgSrc: "assets/homescreen/school/home cards/create user.svg",
-                    press: () {
-                      return AddUserFromSchool();
-                    },
+                    press: () {},
                   ),
                 ],
               ),

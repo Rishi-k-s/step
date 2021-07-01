@@ -15,19 +15,47 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
   final _formKey = GlobalKey<FormState>();
 //drop down
   String dropDownUserType;
+  String dropDownSubjects;
+  String dropDownClass;
+  String dropDownDivision;
   List userDropdownList = ["teacher", "student"];
+  List dropdownSubject = [
+    "Science",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Maths",
+    "Social Science",
+    "History",
+    "Political Science",
+    "Geography",
+    "Economics",
+    "English",
+    "Malayalam",
+    "Hindi",
+  ];
+  List dropdownClass = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  List dropdownDivision = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+
+//drop down swithcer
+  bool dropDownSwitcherTeacher = false;
+  bool dropDownSwitcherStudent = false;
 
 //Boolandstrings
   String error = '';
   String registeredwelcome;
-  String schoolname;
+  String name;
   String email;
   String password;
   String role;
   String state;
   String city;
   String country;
-  String collectionWhereUserShouldBe;
+  String collectionWhereUserShouldBe = "users1";
+  String collectionWhereRoleShouldBe = "roles";
+  String standard;
+  String division;
+  String subject;
   bool hiddenPassword = true;
   bool loading = false;
   bool checkpassword = false;
@@ -86,83 +114,18 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                         key: _formKey,
                         child: Column(
                           children: [
-                            // Name of school
+                            // Name of user
                             Container(
                               // height: 56.9,
                               child: TextFormField(
                                 style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Name of the School' : null,
+                                validator: (val) => val.isEmpty ? 'Name' : null,
                                 onChanged: (val) {
-                                  setState(() => schoolname = val);
+                                  setState(() => name = val);
                                 },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.school_rounded),
-                                  hintText: 'Name of school',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            //City of school
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => city = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'City',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            // state of school
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                autofillHints: [AutofillHints.location],
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => state = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'State',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            //country of school
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                autofillHints: [AutofillHints.countryName],
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => country = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'Country',
+                                  hintText: 'Name',
                                   hintStyle: commontextstyle,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -221,29 +184,37 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                             SizedBox(
                               height: 10.0,
                             ),
+                            // ------------------------------------------
+                            // --------- First Drop Down-----------------
+                            // ------------------------------------------
                             Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white60, width: 4.0),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
+                                  border: Border.all(color: Colors.white60, width: 5.0), borderRadius: BorderRadius.circular(8), color: Colors.white),
                               child: DropdownButton(
                                 hint: Text(
                                   'Select user type',
-                                  style: commontextstyle,
+                                  style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
                                 ),
-                                dropdownColor: Colors.white70,
+                                dropdownColor: Colors.white,
                                 icon: Icon(Icons.arrow_drop_down_rounded),
-                                iconSize: 30.0,
+                                iconSize: 40.0,
                                 isExpanded: true,
                                 underline: SizedBox(),
-                                style: TextStyle(
-                                  fontSize: 22.0,
-                                  color: Colors.blue.shade400,
-                                ),
+                                style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
                                 value: dropDownUserType,
                                 onChanged: (changedValue) {
                                   setState(() {
                                     dropDownUserType = changedValue;
+                                    if (dropDownUserType == 'teacher') {
+                                      dropDownSwitcherTeacher = true;
+                                      dropDownSwitcherStudent = false;
+                                      dropDownClass = null;
+                                      dropDownDivision = null;
+                                    } else {
+                                      dropDownSwitcherTeacher = false;
+                                      dropDownSwitcherStudent = true;
+                                      dropDownSubjects = null;
+                                    }
                                   });
                                 },
                                 items: userDropdownList.map((changedItem) {
@@ -257,6 +228,139 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                 }).toList(),
                               ),
                             ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            // ----------------------------------
+                            // second drop down--------------
+                            // -----------------------
+                            Visibility(
+                              visible: dropDownSwitcherStudent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white60, width: 5.0),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                child: DropdownButton(
+                                  hint: Text(
+                                    'Select class ',
+                                    style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                  ),
+                                  dropdownColor: Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down_rounded),
+                                  iconSize: 40.0,
+                                  isExpanded: true,
+                                  underline: SizedBox(),
+                                  style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                  value: dropDownClass,
+                                  onChanged: (changedValue) {
+                                    setState(() {
+                                      dropDownClass = changedValue;
+                                    });
+                                  },
+                                  items: dropdownClass.map((changedItem) {
+                                    return DropdownMenuItem(
+                                      value: changedItem,
+                                      child: Text(
+                                        changedItem,
+                                        style: commontextstyle,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: dropDownSwitcherStudent,
+                              child: SizedBox(
+                                height: 10.0,
+                              ),
+                            ),
+                            // ----------------------
+                            // ------third dropdown-
+                            // ---------------------
+                            Visibility(
+                              visible: dropDownSwitcherStudent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white60, width: 5.0),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                child: DropdownButton(
+                                  hint: Text(
+                                    'Select division',
+                                    style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                  ),
+                                  dropdownColor: Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down_rounded),
+                                  iconSize: 40.0,
+                                  isExpanded: true,
+                                  underline: SizedBox(),
+                                  style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                  value: dropDownDivision,
+                                  onChanged: (changedValue) {
+                                    setState(() {
+                                      dropDownDivision = changedValue;
+                                    });
+                                  },
+                                  items: dropdownDivision.map((changedItem) {
+                                    return DropdownMenuItem(
+                                      value: changedItem,
+                                      child: Text(
+                                        changedItem,
+                                        style: commontextstyle,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible: dropDownSwitcherStudent,
+                              child: SizedBox(
+                                height: 10.0,
+                              ),
+                            ),
+                            // ----------------------
+                            // ------fourth dropdown-
+                            // ---------------------
+                            Visibility(
+                              visible: dropDownSwitcherTeacher,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white60, width: 5.0),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.white),
+                                child: DropdownButton(
+                                  hint: Text(
+                                    'Select Subject',
+                                    style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                  ),
+                                  dropdownColor: Colors.white,
+                                  icon: Icon(Icons.arrow_drop_down_rounded),
+                                  iconSize: 40.0,
+                                  isExpanded: true,
+                                  underline: SizedBox(),
+                                  style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                  value: dropDownSubjects,
+                                  onChanged: (changedValue) {
+                                    setState(() {
+                                      dropDownSubjects = changedValue;
+                                    });
+                                  },
+                                  items: dropdownSubject.map((changedItem) {
+                                    return DropdownMenuItem(
+                                      value: changedItem,
+                                      child: Text(
+                                        changedItem,
+                                        style: commontextstyle,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+
                             SizedBox(
                               height: 20.0,
                             ),
@@ -273,20 +377,21 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                         setState(() => loading = true);
                                         dynamic result = await _auth.registerWithEmailPasswordUser(
                                           collectionWhereUserShouldBe: collectionWhereUserShouldBe,
+                                          collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
                                           email: email,
                                           password: password,
-                                          name: schoolname,
+                                          name: name,
                                           role: dropDownUserType,
-                                          city: city,
-                                          state: state,
-                                          country: country,
+                                          subject: dropDownSubjects,
+                                          division: dropDownDivision,
+                                          standard: dropDownClass,
                                           //get the school name form the firebase from below code
                                           school: schoolNameFromDatabse,
                                         );
                                         if (result == null) {
                                           setState(() {
                                             loading = false;
-                                            error = 'Could not sign in with those credentials';
+                                            error = 'Could not register with those credentials';
                                             // return the error screen
                                             Future.delayed(const Duration(milliseconds: 1), () {
                                               showDialog(
@@ -297,6 +402,8 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                                       underText: "Error",
                                                       mainText: error,
                                                       buttonText: "Try Again",
+                                                      textcolor: Colors.red[400],
+                                                      buttonColor: Colors.red[400],
                                                       onpressedFunc: () {
                                                         Navigator.pop(context);
                                                       },
@@ -305,15 +412,35 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                             });
                                           });
                                         } else if (result == 'okey') {
-                                          loading = false;
-                                          Navigator.pop(context);
-                                          registeredwelcome = 'School Successfully Registered';
-                                          print(registeredwelcome);
+                                          setState(() {
+                                            loading = false;
+                                            Navigator.pop(context);
+                                            registeredwelcome = '$dropDownUserType Registered Successfully';
+                                            print(registeredwelcome);
+                                            // school registeration completion message
+                                            Future.delayed(const Duration(milliseconds: 1), () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ErrorScreen(
+                                                      svgAsset: 'assets/shared/checkedscreen/checkmark1.svg',
+                                                      underText: "Successful",
+                                                      mainText: registeredwelcome,
+                                                      buttonText: "Continue",
+                                                      onpressedFunc: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      buttonColor: Colors.green[700],
+                                                      textcolor: Colors.green[700],
+                                                    );
+                                                  });
+                                            });
+                                          });
                                         }
                                       }
                                     },
                                     child: Text(
-                                      'Add this School',
+                                      'Add $dropDownUserType',
                                       style: commontextstyle,
                                     ))),
                             SizedBox(

@@ -42,7 +42,7 @@ class _RoleSelectorState extends State<RoleSelector> {
 
   @override
   Widget build(BuildContext context) {
-    print(role + " this is role from firebase");
+    print(role + " is role from firebase");
     switch (role) {
       case 'student':
         return StudentsHomeScreen();

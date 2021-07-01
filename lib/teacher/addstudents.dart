@@ -5,20 +5,20 @@ import 'package:step/shared/errorscreens.dart';
 import 'package:step/shared/loading.dart';
 import 'package:step/shared/textstyle.dart';
 
-class AddSchools extends StatefulWidget {
+class AddStudentsByTeacher extends StatefulWidget {
   @override
-  _AddSchoolsState createState() => _AddSchoolsState();
+  _AddStudentsByTeacherState createState() => _AddStudentsByTeacherState();
 }
 
-class _AddSchoolsState extends State<AddSchools> {
+class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   String registeredwelcome;
-  String schoolname;
+  String name;
   String email;
   String password;
-  String role = "school";
+  String role = "student";
   String state;
   String city;
   String country;
@@ -30,26 +30,19 @@ class _AddSchoolsState extends State<AddSchools> {
   bool checkpassword = false;
 
   void _togglePasswordView() {
-    // if (hiddenPassword = !hiddenPassword) {
-    //   hiddenPassword = false;
-    // } else {
-    //   hiddenPassword = true;
-    // }
     setState(() {
       hiddenPassword = !hiddenPassword;
     });
   }
 
-  // void _togglehiddenPasswordView() {
-  //   // if (hiddenPassword = !hiddenPassword) {
-  //   //   hiddenPassword = false;
-  //   // } else {
-  //   //   hiddenPassword = true;
-  //   // }
-  //   setState(() {
-  //     checkpasswordhidden = !checkpasswordhidden;
-  //   });
-  // }
+  //get school name from datbase
+  String schoolNameFromDatabse;
+  Future<void> getSchool() async {
+    String schoolNameFromFirestore = await UserHelper.getSchoolName();
+    setState(() {
+      schoolNameFromDatabse = schoolNameFromFirestore;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,76 +78,13 @@ class _AddSchoolsState extends State<AddSchools> {
                               // height: 56.9,
                               child: TextFormField(
                                 style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Name of the School' : null,
+                                validator: (val) => val.isEmpty ? 'Name of Student' : null,
                                 onChanged: (val) {
-                                  setState(() => schoolname = val);
+                                  setState(() => name = val);
                                 },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.school_rounded),
-                                  hintText: 'Name of school',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            //City of school
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => city = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'City',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                autofillHints: [AutofillHints.location],
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => state = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'State',
-                                  hintStyle: commontextstyle,
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                              // height: 56.9,
-                              child: TextFormField(
-                                autofillHints: [AutofillHints.countryName],
-                                style: commontextstyle,
-                                validator: (val) => val.isEmpty ? 'Required' : null,
-                                onChanged: (val) {
-                                  setState(() => country = val);
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.location_on),
-                                  hintText: 'Country',
+                                  hintText: 'Name',
                                   hintStyle: commontextstyle,
                                   fillColor: Colors.white,
                                   filled: true,
@@ -208,30 +138,7 @@ class _AddSchoolsState extends State<AddSchools> {
                                 },
                               ),
                             ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                                // height: 56.9,
-                                // child: TextFormField(
-                                //   style: commontextstyle,
-                                //   keyboardType: TextInputType.visiblePassword,
-                                //   decoration: InputDecoration(
-                                //       fillColor: Colors.white,
-                                //       filled: true,
-                                //       hintText: 'Retype Password',
-                                //       hintStyle: commontextstyle,
-                                //       prefixIcon: Icon(Icons.lock),
-                                //       suffixIcon: InkWell(
-                                //           onTap: _togglehiddenPasswordView,
-                                //           child: Icon(checkpasswordhidden ? Icons.visibility : Icons.visibility_off))),
-                                //   obscureText: checkpasswordhidden,
-                                //   validator: (val) => checkpassword ? 'Passwords do not match' : null,
-                                //   onChanged: (val) {
-                                //     setState(() => password = val);
-                                //   },
-                                // ),
-                                ),
+
                             SizedBox(
                               height: 17.0,
                             ),
@@ -246,16 +153,17 @@ class _AddSchoolsState extends State<AddSchools> {
                                     onPressed: () async {
                                       if (_formKey.currentState.validate()) {
                                         setState(() => loading = true);
-                                        dynamic result = await _auth.registerSchoolWithEmailPassword(
+                                        dynamic result = await _auth.registerWithEmailPasswordUser(
                                           collectionWhereUserShouldBe: collectionWhereUserShouldBe,
+                                          collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
+                                          name: name,
                                           email: email,
                                           password: password,
-                                          name: schoolname,
+                                          school: schoolNameFromDatabse,
                                           role: role,
                                           city: city,
                                           state: state,
                                           country: country,
-                                          collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
                                         );
                                         if (result == null) {
                                           setState(() {
@@ -282,7 +190,7 @@ class _AddSchoolsState extends State<AddSchools> {
                                           setState(() {
                                             loading = false;
                                             Navigator.pop(context);
-                                            registeredwelcome = 'School Registered Successfully';
+                                            registeredwelcome = 'Student Registered Successfully';
                                             print(registeredwelcome);
                                             // school registeration completion message
                                             Future.delayed(const Duration(milliseconds: 1), () {
@@ -307,7 +215,7 @@ class _AddSchoolsState extends State<AddSchools> {
                                       }
                                     },
                                     child: Text(
-                                      'Add this School',
+                                      'Add Student',
                                       style: commontextstyle,
                                     ))),
                             SizedBox(

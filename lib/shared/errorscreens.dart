@@ -8,7 +8,10 @@ class ErrorScreen extends StatelessWidget {
   final String mainText;
   final String buttonText;
   final Function onpressedFunc;
-  const ErrorScreen({Key key, this.svgAsset, this.underText, this.buttonText, this.onpressedFunc, this.mainText}) : super(key: key);
+  final Color textcolor;
+  final Color buttonColor;
+  const ErrorScreen({Key key, this.svgAsset, this.underText, this.buttonText, this.onpressedFunc, this.mainText, this.textcolor, this.buttonColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,7 @@ class ErrorScreen extends StatelessWidget {
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0,
-                    color: Colors.red[400],
+                    color: textcolor,
                   ),
                 ),
                 SizedBox(height: 20.0),
@@ -59,7 +62,7 @@ class ErrorScreen extends StatelessWidget {
                 ),
                 TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red[400]),
+                    backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
                     foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
                   ),
                   onPressed: onpressedFunc,

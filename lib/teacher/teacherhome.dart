@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
 import 'package:step/shared/textstyle.dart';
+import 'package:step/teacher/addstudents.dart';
 
 class TeachersHomeScreen extends StatefulWidget {
   @override
@@ -127,7 +128,12 @@ class _TeachersHomeScreenState extends State<TeachersHomeScreen> {
                   CategoryCard(
                     title: "Add Student",
                     svgSrc: "assets/homescreen/teachers/cards/addStudents.svg",
-                    press: () {},
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddStudentsByTeacher()),
+                      );
+                    },
                   ),
                 ],
               ),

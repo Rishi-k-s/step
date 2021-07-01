@@ -154,7 +154,7 @@ class UserHelper {
   }
 
   //Add user to firebase
-  Future<void> addDataToFirebase(
+  Future<void> addUserDataToFirebase(
     String name,
     String email,
     String role,
