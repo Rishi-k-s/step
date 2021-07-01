@@ -20,7 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Rishi Krishna,
 
-Link to the official <a href="http://bitnosh.co"> Website</a>, China, pursuing bachelor’s degree in Software Engineering.
+Link to the official <a href="http://bitnosh.co"> Website</a>
 
 <!-- <h3>💼 Things that I'm currently working on:</h3>
 <details>
