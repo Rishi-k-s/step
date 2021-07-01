@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:step/admin/addschool.dart';
+import 'package:flutter/material.dart';
+import 'package:step/school/adduserFromSchool.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
 import 'package:step/shared/textstyle.dart';
 
-class AdminHomeScreen extends StatefulWidget {
+class SchoolHomeScreen extends StatefulWidget {
   @override
-  _AdminHomeScreenState createState() => _AdminHomeScreenState();
+  _SchoolHomeScreenState createState() => _SchoolHomeScreenState();
 }
 
-class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  String name = "Rishi Krishna";
+class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
+  String name = "School";
   String grade = "10";
   String division = "D";
-  String role = "Admin";
+  String role = "School";
 
   @override
   Widget build(BuildContext context) {
@@ -106,18 +107,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 mainAxisSpacing: 10.0,
                 children: [
                   CategoryCard(
-                    title: "View School",
-                    svgSrc: "assets/homescreen/admin/cards/viewschool.svg",
+                    title: "view users",
+                    svgSrc: "assets/homescreen/school/home cards/add user.svg",
                     press: () {},
                   ),
                   CategoryCard(
-                    title: "Activities",
-                    svgSrc: "assets/homescreen/admin/cards/addschool.svg",
+                    title: "add user",
+                    svgSrc: "assets/homescreen/school/home cards/create user.svg",
                     press: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddSchools()),
-                      );
+                      return AddUserFromSchool();
                     },
                   ),
                 ],

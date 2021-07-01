@@ -61,6 +61,8 @@ flutter:
     - assets/shared/cancelscreen/
     - assets/homescreen/teachers/cards/
     - assets/homescreen/admin/cards/
+    - assets/homescreen/school/home cards/
+    - assets/shared/checkedscreen/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:step/admin/AdminHomeScreen.dart';
+import 'package:step/school/schoolHomeScreen.dart';
 import 'package:step/services/database.dart';
 import 'package:step/shared/loading.dart';
 import 'package:step/student/studenthome.dart';
@@ -51,6 +52,9 @@ class _RoleSelectorState extends State<RoleSelector> {
         break;
       case 'teacher':
         return TeachersHomeScreen();
+        break;
+      case 'school':
+        return SchoolHomeScreen();
         break;
       default:
         return Loading();
