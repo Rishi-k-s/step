@@ -22,8 +22,8 @@ class _AddSchoolsState extends State<AddSchools> {
   String state;
   String city;
   String country;
-  String collectionWhereUserShouldBe = "users1";
-  String collectionWhereRoleShouldBe = "roles";
+  String collectionWhereUserShouldBe = "schools";
+  String collectionWhereRoleShouldBe = "users";
   bool hiddenPassword = true;
   // bool checkpasswordhidden = true;
   bool loading = false;

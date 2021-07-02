@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
+import 'package:step/shared/settings.dart';
 import 'package:step/shared/textstyle.dart';
 
 class StudentsHomeScreen extends StatefulWidget {
@@ -86,8 +87,11 @@ class _StudentsHomeScreenState extends State<StudentsHomeScreen> {
                     color: Colors.white,
                     iconSize: 40.0,
                     //the settings button for now does log oufu
-                    onPressed: () async {
-                      AuthService.signout();
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserSettings()),
+                      );
                     },
                   ),
                 ],

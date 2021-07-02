@@ -22,8 +22,8 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
   String state;
   String city;
   String country;
-  String collectionWhereUserShouldBe = "users1";
-  String collectionWhereRoleShouldBe = "roles";
+  String collectionWhereUserShouldBe = "student";
+  String collectionWhereRoleShouldBe = "users";
   bool hiddenPassword = true;
   // bool checkpasswordhidden = true;
   bool loading = false;
@@ -221,12 +221,6 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
                             SizedBox(
                               height: 25.0,
                             ),
-                            // Center(
-                            //     child: Text(
-                            //   error,
-                            //   style: bigtextstyle,
-                            //   textAlign: TextAlign.center,
-                            // )),
                           ],
                         ),
                       ),

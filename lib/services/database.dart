@@ -31,7 +31,7 @@ class UserHelper {
     //   "school": "none",
     // };
 
-    final userRef = _database.collection("users1").doc(user.uid);
+    final userRef = _database.collection("users").doc(user.uid);
     if ((await userRef.get()).exists) {
       await userRef.update({
         "last_login": user.metadata.lastSignInTime.millisecondsSinceEpoch,
@@ -70,7 +70,7 @@ class UserHelper {
     }
     final timeNowInMillisecond = DateTime.now().millisecondsSinceEpoch;
 
-    final deviceRef = _database.collection("users1").doc(user.uid).collection("devices").doc(deviceId);
+    final deviceRef = _database.collection("users").doc(user.uid).collection("devices").doc(deviceId);
 
     if ((await deviceRef.get()).exists) {
       await deviceRef.update({
@@ -96,7 +96,7 @@ class UserHelper {
     final User user = auth.currentUser;
     final uid = user.uid;
     String role = '';
-    await FirebaseFirestore.instance.doc('roles/$uid').get().then((value) {
+    await FirebaseFirestore.instance.doc('users/$uid').get().then((value) {
       role = value['role'].toString();
     });
     return role;

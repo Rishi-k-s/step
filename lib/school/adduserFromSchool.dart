@@ -51,8 +51,8 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
   String state;
   String city;
   String country;
-  String collectionWhereUserShouldBe = "users1";
-  String collectionWhereRoleShouldBe = "roles";
+  // String collectionWhereUserShouldBe = "users1";
+  String collectionWhereRoleShouldBe = "users";
   String standard;
   String division;
   String subject;
@@ -190,7 +190,7 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                             Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.white60, width: 5.0), borderRadius: BorderRadius.circular(8), color: Colors.white),
-                              child: DropdownButton(
+                              child: DropdownButtonFormField(
                                 hint: Text(
                                   'Select user type',
                                   style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
@@ -199,9 +199,10 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                 icon: Icon(Icons.arrow_drop_down_rounded),
                                 iconSize: 40.0,
                                 isExpanded: true,
-                                underline: SizedBox(),
+                                // underline: SizedBox(),
                                 style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
                                 value: dropDownUserType,
+                                validator: (value) => value == null ? 'Required' : null,
                                 onChanged: (changedValue) {
                                   setState(() {
                                     dropDownUserType = changedValue;
@@ -376,7 +377,7 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                       if (_formKey.currentState.validate()) {
                                         setState(() => loading = true);
                                         dynamic result = await _auth.registerWithEmailPasswordUser(
-                                          collectionWhereUserShouldBe: collectionWhereUserShouldBe,
+                                          collectionWhereUserShouldBe: dropDownUserType,
                                           collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
                                           email: email,
                                           password: password,
