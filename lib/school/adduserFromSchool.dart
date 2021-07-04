@@ -59,12 +59,14 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
   bool hiddenPassword = true;
   bool loading = false;
   bool checkpassword = false;
-
-  //get school name from datbase
+  //Fetch the school uid
+  String schoolUidFromDatabase;
   String schoolNameFromDatabse;
   Future<void> getSchool() async {
+    String schoolUidFromFirestore = await UserHelper.getSchoolUid();
     String schoolNameFromFirestore = await UserHelper.getSchoolName();
     setState(() {
+      schoolUidFromDatabase = schoolUidFromFirestore;
       schoolNameFromDatabse = schoolNameFromFirestore;
     });
   }
@@ -374,9 +376,9 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                       foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
                                     ),
                                     onPressed: () async {
-                                      if (_formKey.currentState.validate()) {
+                                      if (_formKey.currentState.validate() && dropDownUserType == 'teacher') {
                                         setState(() => loading = true);
-                                        dynamic result = await _auth.registerWithEmailPasswordUser(
+                                        dynamic result = await _auth.registerWithEmailPasswordTeacher(
                                           collectionWhereUserShouldBe: dropDownUserType,
                                           collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
                                           email: email,
@@ -384,10 +386,74 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                           name: name,
                                           role: dropDownUserType,
                                           subject: dropDownSubjects,
-                                          division: dropDownDivision,
-                                          standard: dropDownClass,
                                           //get the school name form the firebase from below code
                                           school: schoolNameFromDatabse,
+                                        );
+                                        if (result == null) {
+                                          setState(() {
+                                            loading = false;
+                                            error = 'Could not register with those credentials';
+                                            // return the error screen
+                                            Future.delayed(const Duration(milliseconds: 1), () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ErrorScreen(
+                                                      svgAsset: 'assets/shared/cancelscreen/redcancel.svg',
+                                                      underText: "Error",
+                                                      mainText: error,
+                                                      buttonText: "Try Again",
+                                                      textcolor: Colors.red[400],
+                                                      buttonColor: Colors.red[400],
+                                                      onpressedFunc: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    );
+                                                  });
+                                            });
+                                          });
+                                        } else if (result == 'okey') {
+                                          setState(() {
+                                            loading = false;
+                                            Navigator.pop(context);
+                                            registeredwelcome = '$dropDownUserType Registered Successfully';
+                                            print(registeredwelcome);
+                                            // school registeration completion message
+                                            Future.delayed(const Duration(milliseconds: 1), () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return ErrorScreen(
+                                                      svgAsset: 'assets/shared/checkedscreen/checkmark1.svg',
+                                                      underText: "Successful",
+                                                      mainText: registeredwelcome,
+                                                      buttonText: "Continue",
+                                                      onpressedFunc: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      buttonColor: Colors.green[700],
+                                                      textcolor: Colors.green[700],
+                                                    );
+                                                  });
+                                            });
+                                          });
+                                        }
+                                      }
+                                      if (_formKey.currentState.validate() && dropDownUserType == 'student') {
+                                        setState(() => loading = true);
+                                        dynamic result = await _auth.registerWithEmailPasswordStudent(
+                                          collectionWhereUserShouldBe: dropDownUserType,
+                                          collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
+                                          email: email,
+                                          password: password,
+                                          name: name,
+                                          role: dropDownUserType,
+                                          standard: dropDownClass,
+                                          division: dropDownDivision,
+                                          //get the school name form the firebase from below code
+                                          school: schoolNameFromDatabse,
+                                          schoolUid: schoolUidFromDatabase,
+                                          studentFullClass: dropDownClass + " " + dropDownDivision,
                                         );
                                         if (result == null) {
                                           setState(() {

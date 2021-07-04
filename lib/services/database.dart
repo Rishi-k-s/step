@@ -41,7 +41,9 @@ class UserHelper {
     //  else {
     //   await userRef.set(userData);
     // }
-    await _saveDeviceDetails(user);
+
+    // await _saveDeviceDetails(user);
+    // ^^^^ Here i have starred the Save device details, have to un star it in future -------------
   }
 
   static _saveDeviceDetails(User user) async {
@@ -120,12 +122,44 @@ class UserHelper {
     final User user = auth.currentUser;
     final uid = user.uid;
     String schoolname = '';
-    await FirebaseFirestore.instance.doc('users1/$uid').get().then((value) {
+    await FirebaseFirestore.instance.doc('schools/$uid').get().then((value) {
       schoolname = value['name'].toString();
     });
     return schoolname;
   }
 
+// Get School uid for school
+  static Future<String> getSchoolUid() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolUid = uid;
+    return schoolUid;
+  }
+
+// -----------((Used by Teacher for Student Registration))-----------
+// Get School NAME from firebase
+  static Future<String> getSchoolNameForTeacher() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolname = '';
+    await FirebaseFirestore.instance.doc('teacher/$uid').get().then((value) {
+      schoolname = value['school'].toString();
+    });
+    return schoolname;
+  }
+
+  //Get school UID From firebase
+  static Future<String> getSchoolUidForTeacher() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolUid = '';
+    await FirebaseFirestore.instance.doc('teacher/$uid').get().then((value) {
+      schoolUid = value['schoolUid'].toString();
+    });
+    return schoolUid;
+  }
+
+// ----------------------------------------------------
 //Registeration of users
   Future<void> addSchoolDataToFirebase(
     String name,
@@ -153,20 +187,11 @@ class UserHelper {
     });
   }
 
-  //Add user to firebase
-  Future<void> addUserDataToFirebase(
-    String name,
-    String email,
-    String role,
-    String city,
-    String state,
-    String country,
-    String standard,
-    String division,
-    String subject,
-    String collectionWhereUserShouldBe,
-    String school,
-  ) async {
+  //Add student to firebase
+  Future<void> addStudentDataToFirebase(String name, String email, String role, String city, String state, String country, String standard,
+      String division, String collectionWhereUserShouldBe, String school, String schoolUid, String studentFullClass) async {
+    // final User user = auth.currentUser;
+    // final currentUserUid = user.uid;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     int buildNumber = int.parse(packageInfo.buildNumber);
     return await _database.collection(collectionWhereUserShouldBe).doc(uid).set({
@@ -177,13 +202,42 @@ class UserHelper {
       // "created_at": user.metadata.creationTime.millisecondsSinceEpoch,
       "standard": standard,
       "division": division,
-      "subject": subject,
       // "build_number": buildNumber,
       "role": role,
       "city": city,
       "state": state,
       "country": country,
-      "school": school
+      "school": school,
+      "schoolUid": schoolUid,
+      "class": studentFullClass,
+    });
+  }
+
+  //add teacher to firebase
+  Future<void> addTeacherDataToFirebase(
+    String name,
+    String email,
+    String role,
+    String city,
+    String state,
+    String country,
+    String subject,
+    String collectionWhereTeacherShouldBe,
+    String school,
+  ) async {
+    final User user = auth.currentUser;
+    final currentUserUid = user.uid;
+    return await _database.collection(collectionWhereTeacherShouldBe).doc(uid).set({
+      "schoolUid": currentUserUid,
+      "name": name,
+      "email": email,
+      "uid": uid,
+      "subject": subject,
+      "role": role,
+      "city": city,
+      "state": state,
+      "country": country,
+      "school": school,
     });
   }
 

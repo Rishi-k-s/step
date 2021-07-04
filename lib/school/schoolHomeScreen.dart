@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:step/school/adduserFromSchool.dart';
+import 'package:step/school/usersList.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
 import 'package:step/shared/textstyle.dart';
@@ -119,7 +120,12 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                   CategoryCard(
                     title: "add user",
                     svgSrc: "assets/homescreen/school/home cards/create user.svg",
-                    press: () {},
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ListViewOfSchoolUsers()),
+                      );
+                    },
                   ),
                 ],
               ),

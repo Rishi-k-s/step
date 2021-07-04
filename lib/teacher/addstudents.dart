@@ -24,10 +24,15 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
   String country;
   String collectionWhereUserShouldBe = "student";
   String collectionWhereRoleShouldBe = "users";
+  String dropDownClass;
+  String dropDownDivision;
   bool hiddenPassword = true;
   // bool checkpasswordhidden = true;
   bool loading = false;
   bool checkpassword = false;
+  // List of thes tudent class and division
+  List dropdownClass = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  List dropdownDivision = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
 
   void _togglePasswordView() {
     setState(() {
@@ -35,13 +40,25 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
     });
   }
 
-  //get school name from datbase
-  String schoolNameFromDatabse;
+  //get school details from datbase
+  String schoolNameFromDatabase;
+  String schoolUidFromDatabase;
   Future<void> getSchool() async {
-    String schoolNameFromFirestore = await UserHelper.getSchoolName();
+    String schoolNameFromFirestore = await UserHelper.getSchoolNameForTeacher();
+    String schoolUidFromFirestore = await UserHelper.getSchoolUidForTeacher();
     setState(() {
-      schoolNameFromDatabse = schoolNameFromFirestore;
+      schoolNameFromDatabase = schoolNameFromFirestore;
+      schoolUidFromDatabase = schoolUidFromFirestore;
     });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSchool();
+    });
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -138,6 +155,74 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
                                 },
                               ),
                             ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white60, width: 5.0), borderRadius: BorderRadius.circular(8), color: Colors.white),
+                              child: DropdownButton(
+                                hint: Text(
+                                  'Select class ',
+                                  style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                ),
+                                dropdownColor: Colors.white,
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                iconSize: 40.0,
+                                isExpanded: true,
+                                underline: SizedBox(),
+                                style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                value: dropDownClass,
+                                onChanged: (changedValue) {
+                                  setState(() {
+                                    dropDownClass = changedValue;
+                                  });
+                                },
+                                items: dropdownClass.map((changedItem) {
+                                  return DropdownMenuItem(
+                                    value: changedItem,
+                                    child: Text(
+                                      changedItem,
+                                      style: commontextstyle,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white60, width: 5.0), borderRadius: BorderRadius.circular(8), color: Colors.white),
+                              child: DropdownButton(
+                                hint: Text(
+                                  'Select division',
+                                  style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                ),
+                                dropdownColor: Colors.white,
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                iconSize: 40.0,
+                                isExpanded: true,
+                                underline: SizedBox(),
+                                style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                value: dropDownDivision,
+                                onChanged: (changedValue) {
+                                  setState(() {
+                                    dropDownDivision = changedValue;
+                                  });
+                                },
+                                items: dropdownDivision.map((changedItem) {
+                                  return DropdownMenuItem(
+                                    value: changedItem,
+                                    child: Text(
+                                      changedItem,
+                                      style: commontextstyle,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
 
                             SizedBox(
                               height: 17.0,
@@ -153,17 +238,21 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
                                     onPressed: () async {
                                       if (_formKey.currentState.validate()) {
                                         setState(() => loading = true);
-                                        dynamic result = await _auth.registerWithEmailPasswordUser(
+                                        dynamic result = await _auth.registerWithEmailPasswordStudent(
                                           collectionWhereUserShouldBe: collectionWhereUserShouldBe,
                                           collectionWhereRoleShouldBe: collectionWhereRoleShouldBe,
+                                          schoolUid: schoolUidFromDatabase,
                                           name: name,
                                           email: email,
                                           password: password,
-                                          school: schoolNameFromDatabse,
+                                          school: schoolNameFromDatabase,
                                           role: role,
                                           city: city,
                                           state: state,
                                           country: country,
+                                          standard: dropDownClass,
+                                          division: dropDownDivision,
+                                          studentFullClass: dropDownClass + " " + dropDownDivision,
                                         );
                                         if (result == null) {
                                           setState(() {

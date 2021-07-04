@@ -1,116 +1,177 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:step/services/auth.dart';
 import 'package:step/shared/textstyle.dart';
 
 class UserSettings extends StatelessWidget {
-  final String name;
-  final String studentClass;
-  final String division;
-  final String city;
-  final String state;
-  final String country;
-  final String schoolname;
-  final String buttonText;
-  final Function onPressedSignout;
-  final Function onpressedFunc;
-  final Color textcolor;
-  final Color buttonColor;
-  final int timeInMillis;
-
-  const UserSettings(
-      {Key key,
-      this.name,
-      this.studentClass,
-      this.division,
-      this.city,
-      this.state,
-      this.country,
-      this.schoolname,
-      this.buttonText,
-      this.onPressedSignout,
-      this.onpressedFunc,
-      this.textcolor,
-      this.buttonColor,
-      this.timeInMillis})
-      : super(key: key);
-  //  var date = DateTime.fromMillisecondsSinceEpoch(timeInMillis);
-  //  var formattedDate = DateFormat('MM/dd, hh:mm a').format(date);
+  String name;
+  String changeCity;
+  String changeState;
+  String changeCountry;
+  String studentDivision;
+  String studentClass;
+  String schoolName;
+  String teacherSubject;
+  bool isTeacher;
+  bool isStudent;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+        elevation: 0,
+        backgroundColor: Color(0xff0a2057),
+      ),
       backgroundColor: Color(0xff040812),
-      body: Center(
-          child: Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        child: Stack(
+      body: SafeArea(
+          child: SingleChildScrollView(
+        padding: EdgeInsets.all(15.0),
+        child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-              // margin: EdgeInsets.only(top: 20.0),
-              decoration: BoxDecoration(
+            Card(
+              elevation: 8.0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              margin: EdgeInsets.fromLTRB(15, 30, 15, 15),
+              color: Colors.cyan[900],
+              child: ListTile(
+                onTap: () {
+                  //edit
+                },
+                title: Text(
+                  name ?? "Name",
+                  style: commontextstylewhite,
+                ),
+                trailing: Icon(
+                  Icons.edit,
                   color: Colors.white,
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(8.0),
-                  boxShadow: [BoxShadow(color: Colors.white70, blurRadius: 5.0, offset: Offset(0.0, 5.0))]),
+                ),
+                leading: CircleAvatar(
+                  child: Image.asset('assets/icon/avatar/Avatar.png'),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Card(
+              elevation: 4.0,
+              margin: const EdgeInsets.fromLTRB(32, 0, 32, 16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              color: Color(0xff0a2057),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  //StudentClass
-                  Text(
-                    studentClass ?? "",
-                    style: commontextstyle,
+                  Align(
+                    widthFactor: 30.0,
+                    alignment: Alignment.topLeft,
+                    child: Icon(
+                      Icons.location_city_rounded,
+                      color: Colors.cyan[900],
+                      size: 40.0,
+                    ),
                   ),
-                  SizedBox(
-                    height: 10.0,
+                  ListTile(
+                    title: Text(
+                      "Change City - $changeCity",
+                      style: commontextstylewhite,
+                    ),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right_rounded,
+                      color: Colors.white,
+                    ),
+                    onTap: () {},
                   ),
-                  //Division
-                  Text(
-                    division ?? "",
-                    style: commontextstyle,
+                  _buildDivider(),
+                  ListTile(
+                    title: Text(
+                      "Change State - $changeState",
+                      style: commontextstylewhite,
+                    ),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right_rounded,
+                      color: Colors.white,
+                    ),
+                    onTap: () {},
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  //schoolname
-                  Text(
-                    schoolname ?? "",
-                    style: commontextstyle,
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-
-                  Row(
-                    children: [
-                      TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.lime[900]),
-                          foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
-                        ),
-                        onPressed: onPressedSignout,
-                        child: Text(
-                          buttonText,
-                          style: commontextstyle,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
-                          foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
-                        ),
-                        onPressed: onpressedFunc,
-                        child: Text(
-                          buttonText,
-                          style: commontextstyle,
-                        ),
-                      )
-                    ],
+                  _buildDivider(),
+                  ListTile(
+                    title: Text(
+                      "Change Country - $changeCountry",
+                      style: commontextstylewhite,
+                    ),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right_rounded,
+                      color: Colors.white,
+                    ),
+                    onTap: () {},
                   ),
                 ],
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                "Details",
+                style: bigtextstyle,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      "School - $schoolName",
+                      style: commontextstylewhite,
+                    ),
+                    onTap: () {},
+                  ),
+                  _buildDivider(),
+                  ListTile(
+                    title: Text(
+                      "Class - $studentClass",
+                      style: commontextstylewhite,
+                    ),
+                    onTap: () {},
+                  ),
+                  _buildDivider(),
+                  ListTile(
+                    title: Text(
+                      "Division - $studentDivision",
+                      style: commontextstylewhite,
+                    ),
+                    onTap: () {},
+                  ),
+                  _buildDivider(),
+                  ListTile(
+                    title: Text(
+                      "Subject - $teacherSubject",
+                      style: commontextstylewhite,
+                    ),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 40,
+              width: 140.0,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red[600]),
+                  foregroundColor: MaterialStateProperty.all<Color>(Color(0xffffffff)),
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                  AuthService.signout();
+                },
+                child: Text(
+                  'Sign Out',
+                  style: commontextstyle,
+                ),
               ),
             ),
           ],
@@ -118,4 +179,13 @@ class UserSettings extends StatelessWidget {
       )),
     );
   }
+}
+
+Container _buildDivider() {
+  return Container(
+    margin: EdgeInsets.symmetric(horizontal: 10.0),
+    width: double.infinity,
+    height: 1.0,
+    color: Colors.white,
+  );
 }

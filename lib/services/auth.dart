@@ -79,7 +79,7 @@ class AuthService {
   // -----------------------------------------------
   // ------Register users --------------------------
   // -----------------------------------------------
-  Future registerWithEmailPasswordUser({
+  Future registerWithEmailPasswordStudent({
     String email,
     String password,
     String name,
@@ -89,6 +89,45 @@ class AuthService {
     String country,
     String standard,
     String division,
+    String collectionWhereUserShouldBe,
+    String collectionWhereRoleShouldBe,
+    String school,
+    String schoolUid,
+    String studentFullClass,
+  }) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    final User user = auth.currentUser;
+    print("userid before " + auth.currentUser.uid.toString());
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.bitnosh.com.in', options: Firebase.app().options);
+
+    try {
+      UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
+      // User user = result.user;
+      print("userid after " + auth.currentUser.uid.toString());
+      // add users
+      await UserHelper(uid: result.user.uid).addStudentDataToFirebase(
+          name, email, role, city, state, country, standard, division, collectionWhereUserShouldBe, school, schoolUid, studentFullClass);
+      // add role to firebase
+      await UserHelper(uid: result.user.uid).addRoleDataToFirebase(collectionWhereRoleShouldBe, role);
+      tempApp.delete();
+      return 'okey';
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  // -----------------------------------------------
+  // ------Register users --------------------------
+  // -----------------------------------------------
+  Future registerWithEmailPasswordTeacher({
+    String email,
+    String password,
+    String name,
+    String role,
+    String city,
+    String state,
+    String country,
     String subject,
     String collectionWhereUserShouldBe,
     String collectionWhereRoleShouldBe,
@@ -105,7 +144,7 @@ class AuthService {
       print("userid after " + auth.currentUser.uid.toString());
       // add users
       await UserHelper(uid: result.user.uid)
-          .addUserDataToFirebase(name, email, role, city, state, country, standard, division, subject, collectionWhereUserShouldBe, school);
+          .addTeacherDataToFirebase(name, email, role, city, state, country, subject, collectionWhereUserShouldBe, school);
       // add role to firebase
       await UserHelper(uid: result.user.uid).addRoleDataToFirebase(collectionWhereRoleShouldBe, role);
       tempApp.delete();
