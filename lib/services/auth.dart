@@ -58,7 +58,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     // final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.com.in', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.in.qwe', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -77,7 +77,7 @@ class AuthService {
   }
 
   // -----------------------------------------------
-  // ------Register users --------------------------
+  // ------Register students --------------------------
   // -----------------------------------------------
   Future registerWithEmailPasswordStudent({
     String email,
@@ -98,7 +98,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.bitnosh.com.in', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddx', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -118,7 +118,7 @@ class AuthService {
   }
 
   // -----------------------------------------------
-  // ------Register users --------------------------
+  // ------Register teacher --------------------------
   // -----------------------------------------------
   Future registerWithEmailPasswordTeacher({
     String email,
@@ -136,7 +136,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.bitnosh.com.in', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddx', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);

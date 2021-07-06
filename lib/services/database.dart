@@ -117,6 +117,16 @@ class UserHelper {
 // ----------------------------------------------------
 // ----------------------------------------------------
 // ----------------------------------------------------
+
+  //GET USER UID
+  // Get School uid for school
+  static Future<String> getUserUid() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String currentUserUid = uid;
+    return currentUserUid;
+  }
+
   // Get School name From firebase
   static Future<String> getSchoolName() async {
     final User user = auth.currentUser;

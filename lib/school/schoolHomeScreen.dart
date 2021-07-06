@@ -4,6 +4,7 @@ import 'package:step/school/adduserFromSchool.dart';
 import 'package:step/school/usersList.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
+import 'package:step/shared/settings.dart';
 import 'package:step/shared/textstyle.dart';
 
 class SchoolHomeScreen extends StatefulWidget {
@@ -90,7 +91,10 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
                     iconSize: 40.0,
                     //the settings button for now does log oufu
                     onPressed: () async {
-                      AuthService.signout();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserSettings()),
+                      );
                     },
                   ),
                 ],

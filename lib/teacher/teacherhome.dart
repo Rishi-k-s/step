@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
+import 'package:step/shared/settings.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:step/teacher/addstudents.dart';
 
@@ -88,7 +89,10 @@ class _TeachersHomeScreenState extends State<TeachersHomeScreen> {
                     iconSize: 40.0,
                     //the settings button for now does log oufu
                     onPressed: () async {
-                      AuthService.signout();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserSettings()),
+                      );
                     },
                   ),
                 ],

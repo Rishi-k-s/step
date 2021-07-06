@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:step/services/database.dart';
 
 class ListViewOfSchoolUsers extends StatefulWidget {
   @override
@@ -8,6 +9,27 @@ class ListViewOfSchoolUsers extends StatefulWidget {
 
 class _ListViewOfSchoolUsersState extends State<ListViewOfSchoolUsers> {
   var teachers;
+  //Fetch the school uid
+  String schoolUidFromDatabase;
+  String currentUserUid;
+  Future<void> getSchool() async {
+    String schoolUidFromFirestore = await UserHelper.getSchoolUid();
+    String currentUserUidFromFirestore = await UserHelper.getUserUid();
+    setState(() {
+      schoolUidFromDatabase = schoolUidFromFirestore;
+      currentUserUid = currentUserUidFromFirestore;
+    });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSchool();
+    });
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

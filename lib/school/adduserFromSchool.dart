@@ -51,7 +51,7 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
   String state;
   String city;
   String country;
-  // String collectionWhereUserShouldBe = "users1";
+  // String collectionWhereUserShouldBe;
   String collectionWhereRoleShouldBe = "users";
   String standard;
   String division;
@@ -204,18 +204,24 @@ class _AddUserFromSchoolState extends State<AddUserFromSchool> {
                                 // underline: SizedBox(),
                                 style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
                                 value: dropDownUserType,
-                                validator: (value) => value == null ? 'Required' : null,
+                                validator: (val) => val == null ? 'Required' : null,
                                 onChanged: (changedValue) {
                                   setState(() {
                                     dropDownUserType = changedValue;
                                     if (dropDownUserType == 'teacher') {
                                       dropDownSwitcherTeacher = true;
                                       dropDownSwitcherStudent = false;
+                                      // collectionWhereUserShouldBe = 'teacher/$schoolUidFromDatabase';
+                                      // collectionWhereUserShouldBe = 'teacher';
+
                                       dropDownClass = null;
                                       dropDownDivision = null;
                                     } else {
                                       dropDownSwitcherTeacher = false;
                                       dropDownSwitcherStudent = true;
+
+                                      // collectionWhereUserShouldBe = 'student/$schoolUidFromDatabase';
+                                      // collectionWhereUserShouldBe = 'student';
                                       dropDownSubjects = null;
                                     }
                                   });
