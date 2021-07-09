@@ -4,7 +4,7 @@ import 'package:step/school/adduserFromSchool.dart';
 import 'package:step/school/usersList.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
-import 'package:step/shared/settings.dart';
+import 'package:step/screens/settings.dart';
 import 'package:step/shared/textstyle.dart';
 
 class SchoolHomeScreen extends StatefulWidget {

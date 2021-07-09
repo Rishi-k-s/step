@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
-import 'package:step/shared/settings.dart';
+import 'package:step/screens/settings.dart';
 import 'package:step/shared/textstyle.dart';
+import 'package:step/teacher/add_classes_for_students/add_class_by_teachers.dart';
 import 'package:step/teacher/addstudents.dart';
 
 class TeachersHomeScreen extends StatefulWidget {
@@ -112,7 +113,12 @@ class _TeachersHomeScreenState extends State<TeachersHomeScreen> {
                   CategoryCard(
                     title: "Add liveClasses",
                     svgSrc: "assets/homescreen/teachers/cards/assignclasses.svg",
-                    press: () {},
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ViewAddClassByTeacher()),
+                      );
+                    },
                   ),
                   CategoryCard(
                     title: "Add Activities",

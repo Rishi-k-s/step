@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:step/google_Secrets.dart';
+import 'package:step/services/calendar_client.dart';
 import 'package:step/models/usermodels.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/wrapper.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:googleapis/calendar/v3.dart' as cal;
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  //Calendar things
+  var _clientID = new ClientId(Secret.getId(), "");
+  const _scopes = const [cal.CalendarApi.calendarScope];
+
+  await clientViaUserConsent(_clientID, _scopes, prompt).then((AuthClient client) async {
+    CalendarClient.calendar = cal.CalendarApi(client);
+  });
+
   runApp(Step());
+}
+
+void prompt(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Error launching $url';
+  }
 }
 
 class Step extends StatelessWidget {

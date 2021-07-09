@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
-import 'package:step/shared/settings.dart';
+import 'package:step/screens/settings.dart';
 import 'package:step/shared/textstyle.dart';
 
 class StudentsHomeScreen extends StatefulWidget {
@@ -111,7 +111,12 @@ class _StudentsHomeScreenState extends State<StudentsHomeScreen> {
                   CategoryCard(
                     title: "live Classes",
                     svgSrc: "assets/homescreen/students/cards/liveclasses.svg",
-                    press: () {},
+                    press: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserSettings()),
+                      );
+                    },
                   ),
                   CategoryCard(
                     title: "Activities",
