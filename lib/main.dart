@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:step/google_Secrets.dart';
-import 'package:step/services/calendar_client.dart';
+import 'package:step/services/calendar_services/calendar_client.dart';
 import 'package:step/models/usermodels.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/wrapper.dart';

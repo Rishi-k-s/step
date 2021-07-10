@@ -158,34 +158,38 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
                             SizedBox(
                               height: 10.0,
                             ),
-                            DropdownButtonFormField(
-                              hint: Text(
-                                'Select Class',
-                                style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white60, width: 5.0), borderRadius: BorderRadius.circular(8), color: Colors.white),
+                              child: DropdownButtonFormField(
+                                hint: Text(
+                                  'Select Class',
+                                  style: TextStyle(fontFamily: 'LexendDeca', fontSize: 17),
+                                ),
+                                dropdownColor: Colors.white,
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                iconSize: 40.0,
+                                isExpanded: true,
+                                // underline: SizedBox(),
+                                style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
+                                value: dropDownClass,
+                                validator: (value) => value == null ? 'Required' : null,
+                                onChanged: (changedValue) {
+                                  setState(() {
+                                    dropDownClass = changedValue;
+                                    collectionWhereUserShouldBe = 'student';
+                                  });
+                                },
+                                items: dropdownClass.map((changedItem) {
+                                  return DropdownMenuItem(
+                                    value: changedItem,
+                                    child: Text(
+                                      changedItem,
+                                      style: commontextstyle,
+                                    ),
+                                  );
+                                }).toList(),
                               ),
-                              dropdownColor: Colors.white,
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              iconSize: 40.0,
-                              isExpanded: true,
-                              // underline: SizedBox(),
-                              style: TextStyle(fontSize: 17.0, color: Colors.grey[850], fontFamily: 'LexendDeca'),
-                              value: dropDownClass,
-                              validator: (value) => value == null ? 'Required' : null,
-                              onChanged: (changedValue) {
-                                setState(() {
-                                  dropDownClass = changedValue;
-                                  collectionWhereUserShouldBe = 'student';
-                                });
-                              },
-                              items: dropdownClass.map((changedItem) {
-                                return DropdownMenuItem(
-                                  value: changedItem,
-                                  child: Text(
-                                    changedItem,
-                                    style: commontextstyle,
-                                  ),
-                                );
-                              }).toList(),
                             ),
                             SizedBox(
                               height: 10.0,
