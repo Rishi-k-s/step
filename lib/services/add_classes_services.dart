@@ -11,9 +11,10 @@ class AddClassFirebaseHelper {
   // static FirebaseFirestore _database = FirebaseFirestore.instance;
   static CollectionReference mainCollection = FirebaseFirestore.instance.collection('classes');
 
-  Future<void> addClassDataToFirebase(String studentFullClass, String schoolUid) async {
+  Future<void> addClassDataToFirebase(String studentFullClass, String schoolUid, String classonly) async {
     return await mainCollection.doc(uid).set({
-      "class": studentFullClass,
+      "class": classonly,
+      "fullClassName": studentFullClass,
       // "classUid": uniqueKey,
       "schoolUid": schoolUid,
     });

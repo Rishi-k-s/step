@@ -111,7 +111,7 @@ class AuthService {
       // add role to firebase
       await UserHelper(uid: result.user.uid).addRoleDataToFirebase(collectionWhereRoleShouldBe, role);
       // add classdetails to firebase
-      await AddClassFirebaseHelper(uid: result.user.uid).addClassDataToFirebase(studentFullClass, schoolUid);
+      await AddClassFirebaseHelper(uid: schoolUid).addClassDataToFirebase(studentFullClass, schoolUid, standard);
       tempApp.delete();
       return 'okey';
     } catch (e) {
