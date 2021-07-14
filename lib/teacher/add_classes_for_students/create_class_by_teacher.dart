@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:step/services/calendar_services/calendar_client.dart';
 import 'package:step/services/database.dart';
 import 'package:step/shared/decoration_formatting.dart';
+import 'package:step/shared/loading.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:intl/intl.dart';
@@ -205,7 +206,7 @@ class _CreateClassPageState extends State<CreateClassPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0a2057),
-        title: Text('Add Class'),
+        title: Text('Add Virtual Class'),
       ),
       backgroundColor: Color(0xff040812),
       body: ListView(
@@ -220,6 +221,7 @@ class _CreateClassPageState extends State<CreateClassPage> {
               Center(
                 child: Text(
                   'This will add a new class to the given Date',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -231,6 +233,7 @@ class _CreateClassPageState extends State<CreateClassPage> {
               Center(child: SizedBox(height: 10)),
               Text(
                 'You will have access to modify or remove the classes afterwards',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.grey,
                   fontFamily: 'Raleway',
@@ -249,7 +252,7 @@ class _CreateClassPageState extends State<CreateClassPage> {
                 ),
                 child: Card(
                   elevation: 4.0,
-                  margin: const EdgeInsets.fromLTRB(25, 0, 25, 15),
+                  margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   color: Color(0xff0a2057),
                   child: Column(
@@ -879,129 +882,155 @@ class _CreateClassPageState extends State<CreateClassPage> {
                       padding: EdgeInsets.only(left: 25, right: 25),
                       width: double.maxFinite,
                       child: ElevatedButton(
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue[600]),
-                          ),
-                          child: Text(
-                            'Add Class',
-                            style: commontextstylewhite,
-                          ),
-                          onPressed: isDataStorageInProgress
-                              ? null
-                              : () async {
-                                  setState(() {
-                                    isErrorTime = false;
-                                    isDataStorageInProgress = true;
-                                    currentFullClass = standard + division;
-                                  });
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.blue[600]),
+                        ),
+                        onPressed: isDataStorageInProgress
+                            ? null
+                            : () async {
+                                setState(() {
+                                  isErrorTime = false;
+                                  isDataStorageInProgress = true;
+                                  currentFullClass = standard + division;
+                                });
 
-                                  textFocusNodeTitle.unfocus();
-                                  textFocusNodeDescription.unfocus();
-                                  textFocusNodeLocation.unfocus();
-                                  textFocusNodeAttendee.unfocus();
+                                textFocusNodeTitle.unfocus();
+                                textFocusNodeDescription.unfocus();
+                                textFocusNodeLocation.unfocus();
+                                textFocusNodeAttendee.unfocus();
 
-                                  if (selectedDate != null && selectedStartTime != null && selectedEndTime != null && currentTitle != null) {
-                                    int startTimeInEpoch = DateTime(
-                                      selectedDate.year,
-                                      selectedDate.month,
-                                      selectedDate.day,
-                                      selectedStartTime.hour,
-                                      selectedStartTime.minute,
-                                    ).millisecondsSinceEpoch;
+                                if (selectedDate != null && selectedStartTime != null && selectedEndTime != null && currentTitle != null) {
+                                  int startTimeInEpoch = DateTime(
+                                    selectedDate.year,
+                                    selectedDate.month,
+                                    selectedDate.day,
+                                    selectedStartTime.hour,
+                                    selectedStartTime.minute,
+                                  ).millisecondsSinceEpoch;
 
-                                    int endTimeInEpoch = DateTime(
-                                      selectedDate.year,
-                                      selectedDate.month,
-                                      selectedDate.day,
-                                      selectedEndTime.hour,
-                                      selectedEndTime.minute,
-                                    ).millisecondsSinceEpoch;
+                                  int endTimeInEpoch = DateTime(
+                                    selectedDate.year,
+                                    selectedDate.month,
+                                    selectedDate.day,
+                                    selectedEndTime.hour,
+                                    selectedEndTime.minute,
+                                  ).millisecondsSinceEpoch;
 
-                                    print('DIFFERENCE: ${endTimeInEpoch - startTimeInEpoch}');
+                                  print('DIFFERENCE: ${endTimeInEpoch - startTimeInEpoch}');
 
-                                    print('Start Time: ${DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch)}');
-                                    print('End Time: ${DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch)}');
+                                  print('Start Time: ${DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch)}');
+                                  print('End Time: ${DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch)}');
 
-                                    if (endTimeInEpoch - startTimeInEpoch > 0) {
-                                      if (_validateTitle(currentTitle) == null) {
-                                        await calendarClient
-                                            .insert(
-                                          title: currentTitle,
+                                  if (endTimeInEpoch - startTimeInEpoch > 0) {
+                                    if (_validateTitle(currentTitle) == null) {
+                                      await calendarClient
+                                          .insert(
+                                        title: currentTitle,
+                                        description: currentDescription ?? '',
+                                        location: currentLocation,
+                                        attendeeEmailList: attendeeEmails,
+                                        shouldNotifyAttendees: shouldNofityAttendees,
+                                        hasConferenceSupport: hasConferenceSupport,
+                                        startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
+                                        endTime: DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch),
+                                        schoolUid: schoolUidFromDatabase,
+                                        fullClassName: standard + division,
+                                        standard: standard,
+                                      )
+                                          .then((eventData) async {
+                                        String eventId = eventData['id'];
+                                        String eventLink = eventData['link'];
+
+                                        List<String> emails = [];
+
+                                        for (int i = 0; i < attendeeEmails.length; i++) emails.add(attendeeEmails[i].email);
+
+                                        EventInfo eventInfo = EventInfo(
+                                          id: eventId,
+                                          name: currentTitle,
                                           description: currentDescription ?? '',
                                           location: currentLocation,
-                                          attendeeEmailList: attendeeEmails,
+                                          link: eventLink,
+                                          attendeeEmails: emails,
                                           shouldNotifyAttendees: shouldNofityAttendees,
-                                          hasConferenceSupport: hasConferenceSupport,
-                                          startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
-                                          endTime: DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch),
+                                          hasConfereningSupport: hasConferenceSupport,
+                                          startTimeInEpoch: startTimeInEpoch,
+                                          endTimeInEpoch: endTimeInEpoch,
                                           schoolUid: schoolUidFromDatabase,
-                                          fullClassName: standard + division,
                                           standard: standard,
-                                        )
-                                            .then((eventData) async {
-                                          String eventId = eventData['id'];
-                                          String eventLink = eventData['link'];
-
-                                          List<String> emails = [];
-
-                                          for (int i = 0; i < attendeeEmails.length; i++) emails.add(attendeeEmails[i].email);
-
-                                          EventInfo eventInfo = EventInfo(
-                                            id: eventId,
-                                            name: currentTitle,
-                                            description: currentDescription ?? '',
-                                            location: currentLocation,
-                                            link: eventLink,
-                                            attendeeEmails: emails,
-                                            shouldNotifyAttendees: shouldNofityAttendees,
-                                            hasConfereningSupport: hasConferenceSupport,
-                                            startTimeInEpoch: startTimeInEpoch,
-                                            endTimeInEpoch: endTimeInEpoch,
-                                            schoolUid: schoolUidFromDatabase,
-                                            standard: standard,
-                                            fullClassName: standard + division,
-                                          );
-
-                                          await storage
-                                              .storeEventData(eventInfo, schoolUidFromDatabase, currentFullClass)
-                                              .whenComplete(() => Navigator.of(context).pop())
-                                              .catchError(
-                                                (e) => print(e),
-                                              );
-                                        }).catchError(
-                                          (e) => print(e),
+                                          fullClassName: standard + division,
                                         );
 
-                                        setState(() {
-                                          isDataStorageInProgress = false;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          isEditingTitle = true;
-                                          isEditingLink = true;
-                                        });
-                                      }
+                                        await storage
+                                            .storeEventData(eventInfo, schoolUidFromDatabase, currentFullClass)
+                                            .whenComplete(() => Navigator.of(context).pop())
+                                            .catchError(
+                                              (e) => print(e),
+                                            );
+                                      }).catchError(
+                                        (e) => print(e),
+                                      );
+
+                                      setState(() {
+                                        isDataStorageInProgress = false;
+                                      });
                                     } else {
                                       setState(() {
-                                        isErrorTime = true;
-                                        errorString = 'Invalid time! Please use a proper start and end time';
+                                        isEditingTitle = true;
+                                        isEditingLink = true;
                                       });
                                     }
                                   } else {
                                     setState(() {
-                                      isEditingDate = true;
-                                      isEditingStartTime = true;
-                                      isEditingEndTime = true;
-                                      isEditingBatch = true;
-                                      isEditingTitle = true;
-                                      isEditingLink = true;
+                                      isErrorTime = true;
+                                      errorString = 'Invalid time! Please use a proper start and end time';
                                     });
                                   }
+                                } else {
                                   setState(() {
-                                    isDataStorageInProgress = false;
+                                    isEditingDate = true;
+                                    isEditingStartTime = true;
+                                    isEditingEndTime = true;
+                                    isEditingBatch = true;
+                                    isEditingTitle = true;
+                                    isEditingLink = true;
                                   });
-                                }),
-                    )
+                                }
+                                setState(() {
+                                  isDataStorageInProgress = false;
+                                });
+                              },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                          child: isDataStorageInProgress
+                              ? SizedBox(
+                                  height: 28,
+                                  width: 28,
+                                  child: Loading(),
+                                )
+                              : Text(
+                                  'Add Class',
+                                  style: commontextstylewhite,
+                                ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isErrorTime,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            errorString,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),

@@ -12,6 +12,7 @@ class UserHelper {
   UserHelper({this.uid});
 
   static FirebaseAuth auth = FirebaseAuth.instance;
+  static CollectionReference mainCollection = FirebaseFirestore.instance.collection('liveclasses');
   static FirebaseFirestore _database = FirebaseFirestore.instance;
 
   static saveUser(User user) async {

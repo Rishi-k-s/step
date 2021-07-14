@@ -26,13 +26,14 @@ class UserSettings extends StatelessWidget {
       backgroundColor: Color(0xff040812),
       body: SafeArea(
           child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         padding: EdgeInsets.all(15.0),
         child: Column(
           children: [
             Card(
               elevation: 8.0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-              margin: EdgeInsets.fromLTRB(15, 30, 15, 15),
+              margin: EdgeInsets.fromLTRB(10, 25, 10, 10),
               color: Colors.cyan[900],
               child: ListTile(
                 onTap: () {
@@ -56,7 +57,7 @@ class UserSettings extends StatelessWidget {
             ),
             Card(
               elevation: 4.0,
-              margin: const EdgeInsets.fromLTRB(32, 0, 32, 16),
+              margin: const EdgeInsets.fromLTRB(25, 0, 25, 16),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               color: Color(0xff0a2057),
               child: Column(

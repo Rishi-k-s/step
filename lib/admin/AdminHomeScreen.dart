@@ -99,6 +99,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             ),
             Expanded(
               child: GridView.count(
+                physics: BouncingScrollPhysics(),
                 // shrinkWrap: true,
                 crossAxisCount: 2,
                 childAspectRatio: .75,

@@ -105,6 +105,7 @@ class _SchoolHomeScreenState extends State<SchoolHomeScreen> {
             ),
             Expanded(
               child: GridView.count(
+                physics: BouncingScrollPhysics(),
                 // shrinkWrap: true,
                 crossAxisCount: 2,
                 childAspectRatio: .75,

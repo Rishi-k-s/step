@@ -58,6 +58,7 @@ class _AddSchoolsState extends State<AddSchools> {
         : Scaffold(
             backgroundColor: Color(0xff040812),
             body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   SizedBox(

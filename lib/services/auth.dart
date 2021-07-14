@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:step/models/usermodels.dart';
+import 'package:step/services/add_classes_services.dart';
 import 'package:step/services/database.dart';
 
 class AuthService {
@@ -58,7 +59,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     // final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.in.qwe', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.bitnosh.in.qwed', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -98,7 +99,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddx', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddd.tr', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -109,6 +110,8 @@ class AuthService {
           name, email, role, city, state, country, standard, division, collectionWhereUserShouldBe, school, schoolUid, studentFullClass);
       // add role to firebase
       await UserHelper(uid: result.user.uid).addRoleDataToFirebase(collectionWhereRoleShouldBe, role);
+      // add classdetails to firebase
+      await AddClassFirebaseHelper(uid: result.user.uid).addClassDataToFirebase(studentFullClass, schoolUid);
       tempApp.delete();
       return 'okey';
     } catch (e) {
