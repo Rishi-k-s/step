@@ -1,6 +1,7 @@
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:step/shared/textstyle.dart';
+import 'package:step/teacher/add_activities_for_students/add_activities_buttons/add_text.dart';
 
 class CreateChapterByTeachers extends StatefulWidget {
   @override
@@ -71,7 +72,7 @@ class _CreateChapterByTeachersState extends State<CreateChapterByTeachers> with 
                 _animationController.reverse();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateChapterByTeachers()),
+                  MaterialPageRoute(builder: (context) => AddTextCard()),
                 );
               },
             ),

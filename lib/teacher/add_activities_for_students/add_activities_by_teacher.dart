@@ -5,7 +5,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:step/services/database.dart';
 import 'package:step/shared/loading.dart';
 import 'package:step/shared/textstyle.dart';
+import 'package:step/teacher/add_activities_for_students/add_Chapter_Name.dart';
 import 'package:step/teacher/add_activities_for_students/create_chapter_screen.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class AddActivitesForStudents extends StatefulWidget {
   @override
@@ -221,7 +223,7 @@ class _AddActivitesForStudentsState extends State<AddActivitesForStudents> with 
                 _animationController.reverse();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreateChapterByTeachers()),
+                  MaterialPageRoute(builder: (context) => AddChapterName()),
                 );
               },
             ),
