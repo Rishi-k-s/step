@@ -15,11 +15,26 @@ class ActivitiesHelper {
     ActivitiesInfo activitiesInfo,
   ) async {
     final DocumentReference documentReference = activitiesCollection.doc("${activitiesInfo.schoolUid}");
-    DocumentReference documentReferencer =
-        documentReference.collection("${activitiesInfo.currentClassOnly}").doc('${activitiesInfo.chapterUid}'); // Here the UID should be replaced
+    DocumentReference documentReferencer = documentReference.collection("${activitiesInfo.currentClassOnly}").doc('${activitiesInfo.chapterUid}');
     Map<String, dynamic> data = activitiesInfo.toJson();
     print('DATA:\n$data');
 
     return await documentReferencer.set(data).whenComplete(() => print('Chapter added to the database, id: {${activitiesInfo.chapterUid}}'));
   }
+
+  //Get Basic Activities Data From Firebase
+
+  // static Future<ActivitiesInfo> getBasicChapterDetalis() async {
+  //   final DocumentReference documentReference = activitiesCollection.doc("${activitiesInfo.schoolUid}");
+  //   DocumentReference documentReferencer =
+  //       documentReference.collection("${activitiesInfo.currentClassOnly}").doc('${activitiesInfo.chapterUid}');
+  //   final User user = auth.currentUser;
+  //   final uid = user.uid;
+  //   String schoolname = '';
+  //   await FirebaseFirestore.instance.doc('teacher/$uid').get().then((value) {
+  //     schoolname = value['subject'].toString();
+  //   });
+  //   return schoolname;
+  // }
+
 }
