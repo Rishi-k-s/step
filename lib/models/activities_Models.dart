@@ -6,6 +6,8 @@ class ActivitiesInfo {
   final String fullClassName;
   final String currentClassOnly;
   final String schoolUid;
+  final String teacherSubject;
+  final String teacherUid;
 
   ActivitiesInfo({
     @required this.chapterName,
@@ -13,6 +15,8 @@ class ActivitiesInfo {
     @required this.fullClassName,
     @required this.currentClassOnly,
     @required this.schoolUid,
+    @required this.teacherSubject,
+    @required this.teacherUid,
   });
 
   ActivitiesInfo.fromMap(Map snapshot)
@@ -20,7 +24,9 @@ class ActivitiesInfo {
         chapterUid = snapshot['chapterUid'] ?? '',
         schoolUid = snapshot['schoolUid'] ?? '',
         fullClassName = snapshot['fullClassName'],
-        currentClassOnly = snapshot['currentClassOnly'];
+        currentClassOnly = snapshot['currentClassOnly'],
+        teacherSubject = snapshot['teacherSubject'],
+        teacherUid = snapshot['teacherUid'];
 
   toJson() {
     return {
@@ -29,6 +35,8 @@ class ActivitiesInfo {
       'fullClassName': fullClassName,
       'schoolUid': schoolUid,
       'currentClassOnly': currentClassOnly,
+      'teacherSubject': teacherSubject,
+      'teacherUid': teacherUid,
     };
   }
 }

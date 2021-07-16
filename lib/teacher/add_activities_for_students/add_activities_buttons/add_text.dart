@@ -6,10 +6,11 @@ class AddTextCard extends StatelessWidget {
   final String underText;
   final String mainText;
   final String buttonText;
+  final String chapterName;
   final Function onpressedFunc;
   final Color textcolor;
   final Color buttonColor;
-  const AddTextCard({Key key, this.underText, this.buttonText, this.onpressedFunc, this.mainText, this.textcolor, this.buttonColor})
+  const AddTextCard({Key key, this.underText, this.buttonText, this.onpressedFunc, this.mainText, this.textcolor, this.buttonColor, this.chapterName})
       : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class AddTextCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'This adds a new Text to chapter',
+                  'This adds a new Text to chapter $chapterName',
                   style: TextStyle(
                     fontSize: 25.0,
                     fontWeight: FontWeight.bold,

@@ -159,6 +159,17 @@ class UserHelper {
     return schoolname;
   }
 
+// Get School NAME from firebase
+  static Future<String> getTeachSubject() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolname = '';
+    await FirebaseFirestore.instance.doc('teacher/$uid').get().then((value) {
+      schoolname = value['subject'].toString();
+    });
+    return schoolname;
+  }
+
   //Get school UID From firebase
   static Future<String> getSchoolUidForTeacher() async {
     final User user = auth.currentUser;
