@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:step/models/activities_Models.dart';
+import 'package:step/models/activities_model/activities_Models.dart';
 
 class ActivitiesHelper {
   final String uid;
@@ -24,17 +24,14 @@ class ActivitiesHelper {
 
   //Get Basic Activities Data From Firebase
 
-  // static Future<ActivitiesInfo> getBasicChapterDetalis() async {
-  //   final DocumentReference documentReference = activitiesCollection.doc("${activitiesInfo.schoolUid}");
-  //   DocumentReference documentReferencer =
-  //       documentReference.collection("${activitiesInfo.currentClassOnly}").doc('${activitiesInfo.chapterUid}');
-  //   final User user = auth.currentUser;
-  //   final uid = user.uid;
-  //   String schoolname = '';
-  //   await FirebaseFirestore.instance.doc('teacher/$uid').get().then((value) {
-  //     schoolname = value['subject'].toString();
-  //   });
-  //   return schoolname;
-  // }
-
+  static Future<ActivitiesInfo> getBasicChapterDetalis(String schoolUid, String chapterUid, String currentClassUid) async {
+    final DocumentReference documentReference = activitiesCollection.doc(schoolUid);
+    DocumentReference documentReferencer = documentReference.collection(currentClassUid).doc(chapterUid);
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolname = '';
+    await documentReferencer.get().then((value) {
+      schoolname = value['subject'].toString();
+    });
+  }
 }
