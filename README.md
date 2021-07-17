@@ -17,7 +17,8 @@ samples, guidance on mobile development, and a full API reference.
  -->
 
 # Students Teacher E-Learning Program 📖
-
+[![GitHub Issues](https://img.shields.io/github/issues/Rishi-k-s/step)]
+[![GitHub Forks](https://img.shields.io/github/forks/Rishi-k-s/step)]
 ### Rishi Krishna,
 
 Link to the official <a href="http://bitnosh.co"> Website</a>
