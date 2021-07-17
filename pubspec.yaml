@@ -19,6 +19,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
+  # For Null Safety change the sdk ver. ">+2.7.0" to "2.12.0-0"
 
 dependencies:
   flutter:
@@ -41,6 +42,9 @@ dependencies:
   floating_action_bubble: ^1.1.2
   youtube_player_flutter: ^8.0.0
   flushbar: ^1.10.4
+
+  # flutter_hooks: ^0.18.0
+  # hooks_riverpod: ^0.14.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

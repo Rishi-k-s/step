@@ -71,9 +71,9 @@ class _CreateChapterByTeachersState extends State<CreateChapterByTeachers> with 
 
   @override
   Widget build(BuildContext context) {
-    if (widget.chapterName == null) {
-      setState(() {});
-    }
+    // if (widget.chapterName == null) {
+    //   setState(() {});
+    // }
     return Scaffold(
       backgroundColor: Color(0xff040812),
       appBar: AppBar(
