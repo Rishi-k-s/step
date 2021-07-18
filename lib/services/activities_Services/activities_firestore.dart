@@ -30,8 +30,10 @@ class ActivitiesHelper {
     final User user = auth.currentUser;
     final uid = user.uid;
     String schoolname = '';
+    ActivitiesInfo activitiesInfo=ActivitiesInfo();
     await documentReferencer.get().then((value) {
-      schoolname = value['subject'].toString();
+      activitiesInfo=ActivitiesInfo.fromMap(value.data());
     });
+    return activitiesInfo;
   }
 }

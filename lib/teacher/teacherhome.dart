@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:step/services/activities_Services/activities_firestore.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
 import 'package:step/screens/settings.dart';
@@ -17,6 +19,12 @@ class _TeachersHomeScreenState extends State<TeachersHomeScreen> {
   String grade = "10";
   String division = "D";
   String role = "Teacher";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
