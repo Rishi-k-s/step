@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:step/models/activities_model/activities_Models.dart';
+import 'package:step/services/activities_Services/activities_firestore.dart';
 import 'package:step/services/database.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:step/teacher/add_activities_for_students/add_activities_buttons/add_text.dart';
@@ -47,6 +49,7 @@ class _CreateChapterByTeachersState extends State<CreateChapterByTeachers> with 
     String schoolUidFromFirestore = await UserHelper.getSchoolUidForTeacher();
     String teacherSubjectFromFirestore = await UserHelper.getTeachSubject();
     String teacherUidFromFirestore = await UserHelper.getUserUid();
+    // ActivitiesInfo basicActivitiesInfo = await ActivitiesHelper.getBasicChapterDetalis(schoolUid, chapterUid, currentClassUid);6
     setState(() {
       schoolNameFromDatabase = schoolNameFromFirestore;
       schoolUidFromDatabase = schoolUidFromFirestore;

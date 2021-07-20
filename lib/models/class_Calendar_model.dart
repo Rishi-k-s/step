@@ -9,6 +9,7 @@ class EventInfo {
   final String schoolUid;
   final String standard;
   final String fullClassName;
+  final String teacherUid;
   final List<dynamic> attendeeEmails;
   final bool shouldNotifyAttendees;
   final bool hasConfereningSupport;
@@ -29,6 +30,7 @@ class EventInfo {
     @required this.schoolUid,
     @required this.fullClassName,
     @required this.standard,
+    @required this.teacherUid,
   });
 
   EventInfo.fromMap(Map snapshot)
@@ -44,7 +46,8 @@ class EventInfo {
         endTimeInEpoch = snapshot['end'],
         schoolUid = snapshot['schoolUid'],
         fullClassName = snapshot['FullClassName'],
-        standard = snapshot['standard'];
+        standard = snapshot['standard'],
+        teacherUid = snapshot['teacherUid'];
 
   toJson() {
     return {
@@ -61,6 +64,7 @@ class EventInfo {
       'schoolUid': schoolUid,
       'FullClassName': fullClassName,
       'standard': standard,
+      'teacherUid': teacherUid
     };
   }
 }

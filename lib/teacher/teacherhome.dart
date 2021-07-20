@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:step/services/activities_Services/activities_firestore.dart';
 import 'package:step/services/auth.dart';
@@ -6,7 +5,7 @@ import 'package:step/shared/categorycard.dart';
 import 'package:step/screens/settings.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:step/teacher/add_activities_for_students/add_activities_by_teacher.dart';
-import 'package:step/teacher/add_classes_for_students/add_class_by_teachers.dart';
+import 'package:step/teacher/add_classes_for_students/class_dashbaord_by_teachers.dart';
 import 'package:step/teacher/addstudents.dart';
 
 class TeachersHomeScreen extends StatefulWidget {

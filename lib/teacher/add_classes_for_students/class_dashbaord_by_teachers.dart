@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:step/services/calendar_services/calendar_firestore_storage.dart';
+import 'package:step/services/database.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:step/teacher/add_classes_for_students/create_class_by_teacher.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-
-final kToday = DateTime.now();
-final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
-final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);
 
 class ViewAddClassByTeacher extends StatefulWidget {
   @override
@@ -14,10 +12,33 @@ class ViewAddClassByTeacher extends StatefulWidget {
 }
 
 class _ViewAddClassByTeacherState extends State<ViewAddClassByTeacher> {
-  @override
-  DateTime _focusedDay = DateTime.now();
-  DateTime _selectedDay = DateTime.now();
+  String schoolUidFromDatabase;
+  String teacherNameFromDatabase;
+  String teacherUidFromDatabase;
 
+  Future<void> getSchool() async {
+    String schoolUidFromFirestore = await UserHelper.getSchoolUidForTeacher();
+    String teacherNameFromFirestore = await UserHelper.getTeacherName();
+    String teacherUidFromFirestore = await UserHelper.getUserUid();
+    setState(() {
+      schoolUidFromDatabase = schoolUidFromFirestore;
+      teacherNameFromDatabase = teacherNameFromFirestore;
+      teacherUidFromDatabase = teacherUidFromFirestore;
+    });
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getSchool();
+    });
+
+    super.initState();
+  }
+
+  Storage storage = Storage();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff040812),
@@ -30,15 +51,16 @@ class _ViewAddClassByTeacherState extends State<ViewAddClassByTeacher> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: SafeArea(
-            child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 20, 15, 15),
-              child: DropdownSearch(),
-            )
-          ],
-        )),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 16.0,
+            right: 16.0,
+          ),
+          child: Container(
+            padding: EdgeInsets.only(top: 8.0),
+            color: Colors.white,
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(

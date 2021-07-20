@@ -7,8 +7,8 @@ final CollectionReference mainCollection = FirebaseFirestore.instance.collection
 
 class Storage {
   Future<void> storeEventData(EventInfo eventInfo, String schoolUid, String fullClassName) async {
-    final DocumentReference documentReference = mainCollection.doc("$schoolUid");
-    DocumentReference documentReferencer = documentReference.collection("$fullClassName").doc(eventInfo.id);
+    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    DocumentReference documentReferencer = documentReference.collection("$schoolUid").doc(eventInfo.id);
 
     Map<String, dynamic> data = eventInfo.toJson();
 
@@ -20,8 +20,8 @@ class Storage {
   }
 
   Future<void> updateEventData(EventInfo eventInfo, String schoolUid, String fullClassName) async {
-    final DocumentReference documentReference = mainCollection.doc("$schoolUid");
-    DocumentReference documentReferencer = documentReference.collection('liveclasses').doc(eventInfo.id);
+    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    DocumentReference documentReferencer = documentReference.collection("$schoolUid").doc(eventInfo.id);
 
     Map<String, dynamic> data = eventInfo.toJson();
 
@@ -32,9 +32,9 @@ class Storage {
     }).catchError((e) => print(e));
   }
 
-  Future<void> deleteEvent({@required String id, String schoolUid}) async {
-    final DocumentReference documentReference = mainCollection.doc("$schoolUid");
-    DocumentReference documentReferencer = documentReference.collection('liveclasses').doc(id);
+  Future<void> deleteEvent({@required String id, String schoolUid, String fullClassName}) async {
+    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    DocumentReference documentReferencer = documentReference.collection('$schoolUid').doc(id);
 
     await documentReferencer.delete().catchError((e) => print(e));
 

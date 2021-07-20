@@ -29,7 +29,6 @@ class _AddChapterNameState extends State<AddChapterName> {
   // String uniqueKeyString;
   // var uniqueKey = UniqueKey();
   //get school details from datbase
-  String platformVersionUid = 'Unknown';
   String schoolNameFromDatabase;
   String schoolUidFromDatabase;
   String teacherUid;
@@ -98,7 +97,7 @@ class _AddChapterNameState extends State<AddChapterName> {
                       children: theRedStarAboveName,
                     )),
                     Text(
-                      'This adds a new chapter for the subject $teacherSubjectFromDatabase',
+                      'This adds a new chapter for $teacherSubjectFromDatabase',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey,
