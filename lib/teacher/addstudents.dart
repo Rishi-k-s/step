@@ -266,6 +266,8 @@ class _AddStudentsByTeacherState extends State<AddStudentsByTeacher> {
                                                   context: context,
                                                   builder: (context) {
                                                     return ErrorScreen(
+                                                      textcolor: Colors.red[600],
+                                                      buttonColor: Colors.red[600],
                                                       svgAsset: 'assets/shared/cancelscreen/redcancel.svg',
                                                       underText: "Error",
                                                       mainText: error,

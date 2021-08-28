@@ -99,7 +99,7 @@ class AuthService {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = auth.currentUser;
     print("userid before " + auth.currentUser.uid.toString());
-    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddd.tr', options: Firebase.app().options);
+    FirebaseApp tempApp = await Firebase.initializeApp(name: 'com.step.in.qweddd.tyeyr', options: Firebase.app().options);
 
     try {
       UserCredential result = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
@@ -115,6 +115,7 @@ class AuthService {
       tempApp.delete();
       return 'okey';
     } catch (e) {
+      tempApp.delete();
       print(e.toString());
       return null;
     }

@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:step/services/calendar_services/calendar_client.dart';
 import 'package:step/services/database.dart';
 import 'package:step/shared/decoration_formatting.dart';
+import 'package:step/shared/errorscreens.dart';
 import 'package:step/shared/loading.dart';
 import 'package:step/shared/textstyle.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
@@ -976,6 +977,23 @@ class _CreateClassPageState extends State<CreateClassPage> {
                                                   loading = false;
                                                 });
                                                 Navigator.of(context).pop();
+                                                Future.delayed(const Duration(milliseconds: 1), () {
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return ErrorScreen(
+                                                          svgAsset: 'assets/shared/checkedscreen/checkmark1.svg',
+                                                          underText: "Successful",
+                                                          mainText: "Class Added",
+                                                          buttonText: "Continue",
+                                                          onpressedFunc: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                          buttonColor: Colors.green[700],
+                                                          textcolor: Colors.green[700],
+                                                        );
+                                                      });
+                                                });
                                               }).catchError(
                                                 (e) => print(e),
                                               );

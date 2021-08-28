@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/testing/v1.dart';
 import 'package:step/services/activities_Services/activities_firestore.dart';
 import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
@@ -123,6 +124,14 @@ class _TeachersHomeScreenState extends State<TeachersHomeScreen> {
                     title: "Add liveClasses",
                     svgSrc: "assets/homescreen/teachers/cards/assignclasses.svg",
                     press: () {
+                      // UniqueKey ukp1 = UniqueKey();
+                      // UniqueKey ukp2 = UniqueKey();
+                      // UniqueKey ukp3 = UniqueKey();
+                      // String testUniqueKey;
+                      // setState(() {
+                      //   testUniqueKey = ukp1.toString() + ukp2.toString() + ukp3.toString();
+                      // });
+                      // print('the key $testUniqueKey');
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => ViewAddClassByTeacher()),

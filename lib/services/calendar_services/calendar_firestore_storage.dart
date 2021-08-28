@@ -41,10 +41,44 @@ class Storage {
     print('Event deleted, id: $id');
   }
 
-  Stream<QuerySnapshot> retrieveEvents(String schoolUid, String fullClassName) {
-    final DocumentReference documentReference = mainCollection.doc("$schoolUid");
-    Stream<QuerySnapshot> myClasses = documentReference.collection("$fullClassName").orderBy('start').snapshots();
-
-    return myClasses;
+  Stream<QuerySnapshot> retrieveEventsTeacher(String schoolUid, String teacherUid) {
+    final DocumentReference documentReferencees = mainCollection.doc();
+    Stream<QuerySnapshot> liveClassTeacherData = documentReferencees.collection("$schoolUid").orderBy('start').snapshots();
+    return liveClassTeacherData;
   }
+
+  Stream<QuerySnapshot> retrieveEventsStudent(String schoolUid, String fullClassName) {
+    final DocumentReference documentReferencees = mainCollection.doc('$fullClassName');
+    Stream<QuerySnapshot> liveClassStudentData = documentReferencees.collection("$schoolUid").orderBy('start').snapshots();
+    return liveClassStudentData;
+  }
+
+// want to cont. frm here
+
+  // Future<void> fetchClassDataFromFirebase() async {
+  //   getDocs();
+  // }
+
+  // Future getDocs(String schoolUid) async {
+  //   var querySnapshot = await FirebaseFirestore.instance.collection("liveclasses").get();
+  //   for (int a = 0; a < querySnapshot.docs.length; a++) {
+  //     var data = querySnapshot.docs[a].data();
+
+  //     var secondquery = await FirebaseFirestore.instance
+  //         .collection("liveclasses")
+  //         .doc(querySnapshot.docs[a].data().toString())
+  //         // .doc(querySnapshot.docs[a].data()['id'].toString())
+  //         .collection("$schoolUid")
+  //         .get();
+  //     for (int a = 0; a < secondquery.docs.length; a++) {
+  //       print("->>>>>>> data " + secondquery.docs[a].data().toString());
+  //       print("---------------");
+  //       // activityDataOfTheTeacher = secondquery.docs[a].data()['teacherUid'].toString();
+  //       // if(secondquery.docs[a].data()['teacherUid'].toString()=='z4jJrG4x4yWIcnQfn6vU8WDFaaq2'){
+  //       //   list.add(secondquery.docs[a].data().toString());
+  //       //    }
+
+  //     }
+  //   }
+  // }
 }

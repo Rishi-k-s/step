@@ -41,7 +41,6 @@ class _AddChapterNameState extends State<AddChapterName> {
   FocusNode textFocusNodeDropDown;
 
   final CollectionReference classesCollection = FirebaseFirestore.instance.collection('classes');
-
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
 
@@ -75,6 +74,10 @@ class _AddChapterNameState extends State<AddChapterName> {
 
   @override
   Widget build(BuildContext context) {
+    final DocumentReference documentReference = classesCollection.doc();
+    CollectionReference schoolUidFromClassesCollection = documentReference.collection("$schoolUidFromDatabase");
+    var testref = schoolUidFromClassesCollection.doc("class");
+    print(testref);
     return Scaffold(
       backgroundColor: Color(0xff040812),
       body: SingleChildScrollView(
@@ -166,7 +169,7 @@ class _AddChapterNameState extends State<AddChapterName> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: StreamBuilder<QuerySnapshot>(
-                          stream: classesCollection.snapshots(),
+                          stream: schoolUidFromClassesCollection.snapshots(),
                           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                             if (!snapshot.hasData) return Loading();
                             return Padding(
@@ -195,10 +198,10 @@ class _AddChapterNameState extends State<AddChapterName> {
                                 validator: (val) => val.isEmpty ? 'Required' : null,
                                 style: TextStyle(fontSize: 17.0, color: Colors.white, fontFamily: 'LexendDeca'),
                                 value: currentClassOnly,
-                                onChanged: (changedValue) {
+                                onChanged: (val) {
                                   setState(() {
                                     FocusScope.of(context).unfocus();
-                                    currentClassOnly = changedValue;
+                                    currentClassOnly = val;
                                   });
                                 },
                                 items: snapshot.data.docs.map((value) {
