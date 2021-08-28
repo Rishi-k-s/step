@@ -73,11 +73,11 @@ Link to the official <a href="http://bitnosh.co"> Website</a>
 
 
 
----
+<!-- ---
 
 <img src="https://komarev.com/ghpvc/?username=Rishi-k-s" alt="Rishi-k-s" />
 
------
+----- -->
 Credits: [Rishi Krishna](https://github.com/Rishi-k-s)
 
 Last Edited on: 01/07/2021
