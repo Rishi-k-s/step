@@ -3,6 +3,7 @@ import 'package:step/services/auth.dart';
 import 'package:step/shared/categorycard.dart';
 import 'package:step/screens/settings.dart';
 import 'package:step/shared/textstyle.dart';
+import 'package:step/student/liveclass_Dashboard.dart';
 
 class StudentsHomeScreen extends StatefulWidget {
   @override
@@ -115,7 +116,7 @@ class _StudentsHomeScreenState extends State<StudentsHomeScreen> {
                     press: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserSettings()),
+                        MaterialPageRoute(builder: (context) => ViewClassByStudent()),
                       );
                     },
                   ),

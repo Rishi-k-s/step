@@ -159,7 +159,7 @@ class UserHelper {
     return schoolname;
   }
 
-// Get School NAME from firebase
+// Get teacher subject from firebase
   static Future<String> getTeachSubject() async {
     final User user = auth.currentUser;
     final uid = user.uid;
@@ -181,6 +181,17 @@ class UserHelper {
     return schoolUid;
   }
 
+  //Get school UID From firebase
+  static Future<String> getSchoolUidForStudent() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String schoolUid = '';
+    await FirebaseFirestore.instance.doc('student/$uid').get().then((value) {
+      schoolUid = value['schoolUid'].toString();
+    });
+    return schoolUid;
+  }
+
   // Get Teacher name from Firebase
   static Future<String> getTeacherName() async {
     final User user = auth.currentUser;
@@ -190,6 +201,17 @@ class UserHelper {
       teachername = value['name'].toString();
     });
     return teachername;
+  }
+
+  // Get Teacher name from Firebase
+  static Future<String> getStudentFullClass() async {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    String studentFullClass = '';
+    await FirebaseFirestore.instance.doc('student/$uid').get().then((value) {
+      studentFullClass = value['standard'].toString() + value['division'].toString();
+    });
+    return studentFullClass;
   }
 
 // ----------------------------------------------------

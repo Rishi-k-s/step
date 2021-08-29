@@ -7,7 +7,7 @@ final CollectionReference mainCollection = FirebaseFirestore.instance.collection
 
 class Storage {
   Future<void> storeEventData(EventInfo eventInfo, String schoolUid, String fullClassName) async {
-    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    final DocumentReference documentReference = mainCollection.doc("classes");
     DocumentReference documentReferencer = documentReference.collection("$schoolUid").doc(eventInfo.id);
 
     Map<String, dynamic> data = eventInfo.toJson();
@@ -20,7 +20,7 @@ class Storage {
   }
 
   Future<void> updateEventData(EventInfo eventInfo, String schoolUid, String fullClassName) async {
-    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    final DocumentReference documentReference = mainCollection.doc("classes");
     DocumentReference documentReferencer = documentReference.collection("$schoolUid").doc(eventInfo.id);
 
     Map<String, dynamic> data = eventInfo.toJson();
@@ -33,7 +33,7 @@ class Storage {
   }
 
   Future<void> deleteEvent({@required String id, String schoolUid, String fullClassName}) async {
-    final DocumentReference documentReference = mainCollection.doc("$fullClassName");
+    final DocumentReference documentReference = mainCollection.doc("classes");
     DocumentReference documentReferencer = documentReference.collection('$schoolUid').doc(id);
 
     await documentReferencer.delete().catchError((e) => print(e));
@@ -42,13 +42,13 @@ class Storage {
   }
 
   Stream<QuerySnapshot> retrieveEventsTeacher(String schoolUid, String teacherUid) {
-    final DocumentReference documentReferencees = mainCollection.doc();
+    final DocumentReference documentReferencees = mainCollection.doc("classes");
     Stream<QuerySnapshot> liveClassTeacherData = documentReferencees.collection("$schoolUid").orderBy('start').snapshots();
     return liveClassTeacherData;
   }
 
   Stream<QuerySnapshot> retrieveEventsStudent(String schoolUid, String fullClassName) {
-    final DocumentReference documentReferencees = mainCollection.doc('$fullClassName');
+    final DocumentReference documentReferencees = mainCollection.doc("classes");
     Stream<QuerySnapshot> liveClassStudentData = documentReferencees.collection("$schoolUid").orderBy('start').snapshots();
     return liveClassStudentData;
   }
